@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Creatividad Sin Fronteras - Recursos gratuitos y herramientas para diseñadores, artistas y creadores digitales." />
+  <title>Creatividad Sin Fronteras - Nileynave</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dipv76dpn/image/upload/v1761056303/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__1_poda8e.png" />
+
+  <!-- CSS General -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- CSS Específico para CSF -->
+  <style>
+    /* ===== VARIABLES PARA MODO OSCURO ===== */
+    :root {
+      /* Colores modo claro (default) */
+      --azul-profundo: #1a2b4d;
+      --azul-medio: #2c5282;
+      --azul-claro: #3182ce;
+      --arena: #fdf6e3;
+      --blanco: #ffffff;
+      --gris-claro: #f8f9fa;
+      --gris-medio: #e2e8f0;
+      --gris-oscuro: #4a5568;
+      --dorado: #f6b93b;
+      --verde: #38a169;
+      --rojo: #e53e3e;
+      
+      /* Fondos modo claro */
+      --fondo-primario: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+      --fondo-secundario: #ffffff;
+      --fondo-terciario: #f8f9fa;
+      
+      /* Textos modo claro */
+      --texto-primario: #1a2b4d;
+      --texto-secundario: #4a5568;
+      --texto-terciario: #718096;
+      
+      /* Sombras modo claro */
+      --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --sombra-fuerte: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== MODO OSCURO ===== */
+    [data-tema="oscuro"] {
+      /* Colores modo oscuro */
+      --azul-profundo: #ebf8ff;
+      --azul-medio: #90cdf4;
+      --azul-claro: #63b3ed;
+      --arena: #2d3748;
+      --blanco: #1a202c;
+      --gris-claro: #2d3748;
+      --gris-medio: #4a5568;
+      --gris-oscuro: #a0aec0;
+      --dorado: #f6ad55;
+      --verde: #68d391;
+      --rojo: #fc8181;
+      
+      /* Fondos modo oscuro */
+      --fondo-primario: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      --fondo-secundario: #2d3748;
+      --fondo-terciario: #4a5568;
+      
+      /* Textos modo oscuro */
+      --texto-primario: #f7fafc;
+      --texto-secundario: #e2e8f0;
+      --texto-terciario: #cbd5e0;
+      
+      /* Sombras modo oscuro */
+      --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.3);
+      --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --sombra-fuerte: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ===== APLICAR VARIABLES A ELEMENTOS ===== */
+    body {
+      background: var(--fondo-primario);
+      color: var(--texto-primario);
+    }
+
+    .navbar {
+      background: var(--fondo-secundario);
+      box-shadow: var(--sombra-media);
+    }
+
+    .navbar-scrolled {
+      background: rgba(var(--fondo-secundario-rgb), 0.98);
+    }
+
+    .card {
+      background: var(--fondo-secundario);
+      box-shadow: var(--sombra-media);
+    }
+
+    .card:hover {
+      box-shadow: var(--sombra-fuerte);
+    }
+
+    /* ===== CORRECCIÓN DEL FOOTER ===== */
+    .footer {
+      background: var(--azul-profundo);
+      color: var(--texto-secundario);
+    }
+
+    /* En modo oscuro, el footer necesita colores específicos */
+    [data-tema="oscuro"] .footer {
+      background: #1a365d;
+      color: #cbd5e0;
+      border-top: 1px solid #2d3748;
+    }
+
+    /* ===== BOTÓN TOGGLE TEMA ===== */
+    .tema-toggle {
+      background: none;
+      border: 2px solid var(--azul-medio);
+      color: var(--azul-medio);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-left: var(--espacio-sm);
+    }
+
+    .tema-toggle:hover {
+      background: var(--azul-medio);
+      color: var(--blanco);
+      transform: rotate(15deg);
+    }
+
+    .tema-icono {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    [data-tema="oscuro"] .tema-icono {
+      transform: rotate(180deg);
+    }
+
+    /* ===== ESTILOS ESPECÍFICOS PARA CSF ===== */
+    .categorias-creatividad {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--espacio-lg);
+      margin-bottom: var(--espacio-xl);
+    }
+
+    .categoria-creativa {
+      background: var(--fondo-secundario);
+      padding: var(--espacio-lg);
+      border-radius: var(--radio-borde-lg);
+      text-align: center;
+      box-shadow: var(--sombra-media);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .categoria-creativa:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--sombra-fuerte);
+      border-color: var(--azul-medio);
+    }
+
+    .categoria-creativa.active {
+      border-color: var(--azul-medio);
+      background: linear-gradient(135deg, var(--fondo-secundario), var(--fondo-terciario));
+    }
+
+    .categoria-icono {
+      font-size: 3rem;
+      margin-bottom: var(--espacio-sm);
+    }
+
+    .recursos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--espacio-lg);
+    }
+
+    .recurso-card {
+      background: var(--fondo-secundario);
+      border-radius: var(--radio-borde-lg);
+      overflow: hidden;
+      box-shadow: var(--sombra-media);
+      transition: all 0.3s ease;
+    }
+
+    .recurso-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--sombra-fuerte);
+    }
+
+    .recurso-preview {
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2.5rem;
+    }
+
+    .recurso-contenido {
+      padding: var(--espacio-md);
+    }
+
+    .recurso-header {
+      margin-bottom: var(--espacio-sm);
+    }
+
+    .recurso-titulo {
+      font-size: 1.2rem;
+      margin-bottom: var(--espacio-xs);
+      color: var(--texto-primario);
+    }
+
+    .recurso-tipo {
+      display: inline-block;
+      background: var(--gris-claro);
+      color: var(--azul-medio);
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .recurso-descripcion {
+      color: var(--texto-secundario);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: var(--espacio-md);
+    }
+
+    .recurso-caracteristicas {
+      margin-bottom: var(--espacio-md);
+    }
+
+    .recurso-caracteristicas h4 {
+      color: var(--azul-medio);
+      margin-bottom: var(--espacio-xs);
+      font-size: 0.9rem;
+    }
+
+    .caracteristicas-lista {
+      list-style: none;
+      padding: 0;
+    }
+
+    .caracteristicas-lista li {
+      padding: 0.2rem 0;
+      color: var(--texto-secundario);
+      position: relative;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .caracteristicas-lista li:before {
+      content: "★";
+      color: var(--dorado);
+      position: absolute;
+      left: 0;
+    }
+
+    .recurso-acciones {
+      display: flex;
+      gap: var(--espacio-xs);
+    }
+
+    .btn-descarga {
+      flex: 1;
+    }
+
+    .tutoriales-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--espacio-lg);
+    }
+
+    .tutorial-card {
+      background: var(--fondo-secundario);
+      border-radius: var(--radio-borde-lg);
+      padding: var(--espacio-md);
+      box-shadow: var(--sombra-media);
+      transition: all 0.3s ease;
+    }
+
+    .tutorial-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--sombra-fuerte);
+    }
+
+    .tutorial-header {
+      display: flex;
+      align-items: center;
+      gap: var(--espacio-sm);
+      margin-bottom: var(--espacio-sm);
+    }
+
+    .tutorial-icono {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .tutorial-duracion {
+      background: var(--azul-medio);
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .nivel-dificultad {
+      display: flex;
+      align-items: center;
+      gap: var(--espacio-xs);
+      margin-top: var(--espacio-sm);
+      font-size: 0.8rem;
+      color: var(--texto-secundario);
+    }
+
+    .nivel-puntos {
+      display: flex;
+      gap: 2px;
+    }
+
+    .punto {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gris-medio);
+    }
+
+    .punto.activo {
+      background: var(--azul-medio);
+    }
+
+    .tutorial-acciones {
+      display: flex;
+      gap: var(--espacio-xs);
+      margin-top: var(--espacio-md);
+    }
+
+    .btn-tutorial {
+      flex: 1;
+    }
+
+/* ===== MODAL ===== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  backdrop-filter: blur(5px);
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-contenido {
+  background: var(--fondo-secundario);
+  border-radius: var(--radio-borde-lg);
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--sombra-fuerte);
+  animation: modalEntrar 0.3s ease;
+}
+
+@keyframes modalEntrar {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--espacio-md);
+  border-bottom: 2px solid var(--gris-claro);
+  background: var(--azul-profundo); /* Cambiado para usar variable */
+  color: white;
+  border-radius: var(--radio-borde-lg) var(--radio-borde-lg) 0 0;
+}
+
+.modal-titulo {
+  margin: 0;
+  color: white; /* Siempre blanco para buen contraste */
+  font-size: 1.4rem;
+}
+
+.modal-cerrar {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.modal-cerrar:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== CORRECCIÓN ESPECÍFICA PARA MODO OSCURO EN MODAL HEADER ===== */
+[data-tema="oscuro"] .modal-header {
+  background: #1a365d; /* Azul más oscuro para modo oscuro */
+  border-bottom: 2px solid var(--gris-medio);
+}
+
+[data-tema="oscuro"] .modal-titulo {
+  color: white; /* Asegurar que sea blanco */
+}
+
+[data-tema="oscuro"] .modal-cerrar {
+  color: white;
+}
+
+[data-tema="oscuro"] .modal-cerrar:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+    .modal-body {
+      padding: var(--espacio-lg);
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%; /* Relación 16:9 */
+      margin-bottom: var(--espacio-md);
+      background: var(--gris-oscuro);
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+    }
+
+    .video-embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: linear-gradient(135deg, var(--azul-medio), var(--azul-profundo));
+      gap: var(--espacio-sm);
+    }
+
+    .placeholder-icono {
+      font-size: 4rem;
+    }
+
+    .placeholder-texto {
+      font-size: 1.1rem;
+      text-align: center;
+      max-width: 80%;
+    }
+
+    .video-info {
+      margin-bottom: var(--espacio-lg);
+    }
+
+    .video-descripcion {
+      color: var(--texto-secundario);
+      line-height: 1.6;
+      margin-bottom: var(--espacio-md);
+    }
+
+    .video-metadata {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--espacio-sm);
+      margin-bottom: var(--espacio-md);
+    }
+
+    .metadata-item {
+      text-align: center;
+      padding: var(--espacio-sm);
+      background: var(--gris-claro);
+      border-radius: var(--radio-borde);
+    }
+
+    .metadata-label {
+      font-size: 0.8rem;
+      color: var(--texto-secundario);
+      margin-bottom: 0.25rem;
+    }
+
+    .metadata-value {
+      font-weight: 600;
+      color: var(--azul-profundo);
+    }
+
+    .video-enlaces {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--espacio-sm);
+      margin-bottom: var(--espacio-lg);
+    }
+
+    .btn-video {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--espacio-xs);
+    }
+
+    .btn-externo::after {
+      content: "↗";
+      font-size: 0.9em;
+    }
+
+    .tutoriales-lista {
+      margin-top: var(--espacio-lg);
+    }
+
+    .tutoriales-lista h4 {
+      color: var(--azul-medio);
+      margin-bottom: var(--espacio-sm);
+    }
+
+    .lista-tutoriales {
+      list-style: none;
+      padding: 0;
+    }
+
+    .lista-tutoriales li {
+      padding: var(--espacio-sm);
+      border-bottom: 1px solid var(--gris-medio);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .lista-tutoriales li:hover {
+      background: var(--gris-claro);
+    }
+
+    .lista-tutoriales li:last-child {
+      border-bottom: none;
+    }
+
+    .tutorial-mini {
+      display: flex;
+      align-items: center;
+      gap: var(--espacio-sm);
+    }
+
+    .tutorial-mini-icono {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .tutorial-mini-info {
+      flex: 1;
+    }
+
+    .tutorial-mini-titulo {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--texto-primario);
+    }
+
+    .tutorial-mini-duracion {
+      font-size: 0.8rem;
+      color: var(--texto-secundario);
+    }
+
+    .video-indicador {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      background: var(--verde);
+      color: white;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: var(--espacio-xs);
+    }
+
+    /* ===== MEJORAS VISUALES MODO OSCURO ===== */
+    [data-tema="oscuro"] .logo {
+      filter: brightness(0.9);
+    }
+
+    [data-tema="oscuro"] .menu a {
+      color: var(--texto-secundario);
+    }
+
+    [data-tema="oscuro"] .menu a:hover,
+    [data-tema="oscuro"] .menu a.active {
+      color: var(--blanco);
+      background: var(--azul-medio);
+    }
+
+    [data-tema="oscuro"] .hero .tagline {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .hero .subtitle {
+      color: var(--texto-secundario);
+    }
+
+    [data-tema="oscuro"] .recurso-tipo {
+      background: var(--gris-medio);
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .recurso-caracteristicas h4 {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .punto {
+      background: var(--gris-medio);
+    }
+
+    [data-tema="oscuro"] .metadata-item {
+      background: var(--gris-medio);
+    }
+
+    [data-tema="oscuro"] .metadata-value {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .lista-tutoriales li:hover {
+      background: var(--gris-medio);
+    }
+
+    /* ===== MEJORAS ADICIONALES PARA MODO OSCURO ===== */
+    [data-tema="oscuro"] .btn {
+      background: var(--azul-medio);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .btn:hover {
+      background: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .btn-outline {
+      background: transparent;
+      border: 2px solid var(--azul-medio);
+      color: var(--azul-medio);
+    }
+
+    [data-tema="oscuro"] .btn-outline:hover {
+      background: var(--azul-medio);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .btn-tutorial {
+      background: var(--azul-medio);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .btn-tutorial:hover {
+      background: var(--azul-claro);
+    }
+
+    /* ===== TRANSICIONES SUAVES ===== */
+    body,
+    .navbar,
+    .card,
+    .btn,
+    .menu a,
+    .footer,
+    .recurso-card,
+    .tutorial-card,
+    .categoria-creativa,
+    .modal-contenido {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .recursos-grid,
+      .tutoriales-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .categorias-creatividad {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .recurso-acciones,
+      .tutorial-acciones {
+        flex-direction: column;
+      }
+
+      .modal-contenido {
+        width: 95%;
+        margin: var(--espacio-sm);
+      }
+
+      .video-enlaces {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .categorias-creatividad {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-body {
+        padding: var(--espacio-md);
+      }
+
+      .video-metadata {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-tema="claro">
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link" aria-label="Ir al inicio de Nileynave">
+        <img 
+          src="https://res.cloudinary.com/dipv76dpn/image/upload/v1761091782/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__2_mt4o3k.png" 
+          alt="Logo Nileynave" 
+          class="logo"
+        />
+      </a>
+    </div>
+
+    <div class="nav-title">
+      <h1>Nileynave</h1>
+      <div class="tagline">Creatividad Sin Fronteras</div>
+    </div>
+
+    <div class="menu-container">
+      <div class="menu" id="menu">
+        <a href="index.html">Inicio</a>
+        <a href="#recursos" class="active">Recursos</a>
+        <a href="#tutoriales">Tutoriales</a>
+      </div>
+
+      <!-- Botón Toggle Tema -->
+      <button class="tema-toggle" id="temaToggle" aria-label="Cambiar tema">
+        <span class="tema-icono">🌙</span>
+      </button>
+
+      <div class="hamburger" id="hamburger" aria-label="Menú de navegación">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <p class="tagline">Creatividad Sin Fronteras</p>
+    <p class="subtitle">Recursos gratuitos y herramientas para diseñadores, artistas y creadores digitales</p>
+  </header>
+
+  <!-- Categorías -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Categorías de Recursos</h2>
+        <p>Explora nuestras categorías especializadas para creadores</p>
+      </div>
+
+      <div class="categorias-creatividad">
+        <div class="categoria-creativa active" data-categoria="todas">
+          <div class="categoria-icono">🎨</div>
+          <h3>Todos los Recursos</h3>
+          <p>Acceso completo a toda nuestra colección</p>
+        </div>
+
+        <div class="categoria-creativa" data-categoria="diseno">
+          <div class="categoria-icono">✏️</div>
+          <h3>Diseño Gráfico</h3>
+          <p>Herramientas y recursos para diseño</p>
+        </div>
+
+        <div class="categoria-creativa" data-categoria="fotografia">
+          <div class="categoria-icono">📷</div>
+          <h3>Fotografía</h3>
+          <p>Recursos para fotógrafos y editores</p>
+        </div>
+
+        <div class="categoria-creativa" data-categoria="video">
+          <div class="categoria-icono">🎬</div>
+          <h3>Video & Animación</h3>
+          <p>Herramientas de edición y animación</p>
+        </div>
+      </div>
+
+      <!-- Recursos -->
+      <div id="recursos">
+        <div class="section-header">
+          <h2>Recursos Creativos</h2>
+          <p>Herramientas y recursos gratuitos para potenciar tu creatividad</p>
+        </div>
+
+        <div class="recursos-grid">
+          
+          <!-- Recurso 1 -->
+          <div class="recurso-card" data-categoria="diseno">
+            <div class="recurso-preview">🖼️</div>
+            <div class="recurso-contenido">
+              <div class="recurso-header">
+                <h4 class="recurso-titulo">GIMP</h4>
+                <span class="recurso-tipo">Software</span>
+              </div>
+              
+              <p class="recurso-descripcion">
+                Editor de imágenes de código abierto y gratuito, alternativa poderosa a Photoshop.
+              </p>
+              
+              <div class="recurso-caracteristicas">
+                <h4>Características:</h4>
+                <ul class="caracteristicas-lista">
+                  <li>Edición avanzada de capas</li>
+                  <li>Filtros y efectos profesionales</li>
+                  <li>Soporte para múltiples formatos</li>
+                  <li>Compatible con plugins</li>
+                </ul>
+              </div>
+              
+              <div class="recurso-acciones">
+                <a href="https://www.gimp.org/" class="btn btn-sm btn-descarga" target="_blank">Descargar</a>
+                <a href="https://docs.gimp.org/" class="btn btn-sm btn-outline" target="_blank">Documentación</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recurso 2 -->
+          <div class="recurso-card" data-categoria="diseno">
+            <div class="recurso-preview">🎨</div>
+            <div class="recurso-contenido">
+              <div class="recurso-header">
+                <h4 class="recurso-titulo">Krita</h4>
+                <span class="recurso-tipo">Software</span>
+              </div>
+              
+              <p class="recurso-descripcion">
+                Programa de pintura digital gratuito, ideal para artistas e ilustradores.
+              </p>
+              
+              <div class="recurso-caracteristicas">
+                <h4>Características:</h4>
+                <ul class="caracteristicas-lista">
+                  <li>Pinceles personalizables</li>
+                  <li>Soporte para tablets gráficas</li>
+                  <li>Motor de pinceles avanzado</li>
+                  <li>Interfaz intuitiva</li>
+                </ul>
+              </div>
+              
+              <div class="recurso-acciones">
+                <a href="https://krita.org/" class="btn btn-sm btn-descarga" target="_blank">Descargar</a>
+                <a href="https://docs.krita.org/" class="btn btn-sm btn-outline" target="_blank">Tutoriales</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recurso 3 -->
+          <div class="recurso-card" data-categoria="fotografia">
+            <div class="recurso-preview">📸</div>
+            <div class="recurso-contenido">
+              <div class="recurso-header">
+                <h4 class="recurso-titulo">Darktable</h4>
+                <span class="recurso-tipo">Software</span>
+              </div>
+              
+              <p class="recurso-descripcion">
+                Alternativa gratuita a Lightroom para fotógrafos, con procesamiento RAW avanzado.
+              </p>
+              
+              <div class="recurso-caracteristicas">
+                <h4>Características:</h4>
+                <ul class="caracteristicas-lista">
+                  <li>Procesamiento RAW profesional</li>
+                  <li>Gestor de bibliotecas</li>
+                  <li>Mapeo de tonos avanzado</li>
+                  <li>Presets personalizables</li>
+                </ul>
+              </div>
+              
+              <div class="recurso-acciones">
+                <a href="https://www.darktable.org/" class="btn btn-sm btn-descarga" target="_blank">Descargar</a>
+                <a href="https://docs.darktable.org/" class="btn btn-sm btn-outline" target="_blank">Guías</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recurso 4 -->
+          <div class="recurso-card" data-categoria="video">
+            <div class="recurso-preview">🎥</div>
+            <div class="recurso-contenido">
+              <div class="recurso-header">
+                <h4 class="recurso-titulo">DaVinci Resolve</h4>
+                <span class="recurso-tipo">Software</span>
+              </div>
+              
+              <p class="recurso-descripcion">
+                Software profesional de edición de video, colorización y postproducción gratuito.
+              </p>
+              
+              <div class="recurso-caracteristicas">
+                <h4>Características:</h4>
+                <ul class="caracteristicas-lista">
+                  <li>Edición multicámara</li>
+                  <li>Colorización profesional</li>
+                  <li>Efectos visuales</li>
+                  <li>Audio postproducción</li>
+                </ul>
+              </div>
+              
+              <div class="recurso-acciones">
+                <a href="https://www.blackmagicdesign.com/products/davinciresolve" class="btn btn-sm btn-descarga" target="_blank">Descargar</a>
+                <a href="https://www.blackmagicdesign.com/products/davinciresolve/training" class="btn btn-sm btn-outline" target="_blank">Cursos</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tutoriales -->
+  <section id="tutoriales" class="section" style="background: var(--gris-claro);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Tutoriales y Guías</h2>
+        <p>Aprende nuevas habilidades con nuestros tutoriales paso a paso</p>
+      </div>
+
+      <div class="tutoriales-grid">
+        
+        <!-- Tutorial 1 -->
+        <div class="tutorial-card">
+          <div class="tutorial-header">
+            <div class="tutorial-icono">🎨</div>
+            <div>
+              <h4>Introducción a GIMP</h4>
+              <span class="tutorial-duracion">2 horas</span>
+            </div>
+          </div>
+          
+          <p>Aprende los fundamentos del editor de imágenes GIMP desde cero.</p>
+          
+          <div class="nivel-dificultad">
+            <span>Dificultad:</span>
+            <div class="nivel-puntos">
+              <div class="punto activo"></div>
+              <div class="punto"></div>
+              <div class="punto"></div>
+            </div>
+            <span>Principiante</span>
+          </div>
+          
+          <div class="tutorial-acciones">
+            <button class="btn btn-sm btn-tutorial" data-tutorial="gimp">Ver Tutorial</button>
+          </div>
+        </div>
+
+        <!-- Tutorial 2 -->
+        <div class="tutorial-card">
+          <div class="tutorial-header">
+            <div class="tutorial-icono">📷</div>
+            <div>
+              <h4>Fotografía Digital</h4>
+              <span class="tutorial-duracion">4 horas</span>
+            </div>
+          </div>
+          
+          <p>Domina los conceptos básicos de la fotografía y edición digital.</p>
+          
+          <div class="nivel-dificultad">
+            <span>Dificultad:</span>
+            <div class="nivel-puntos">
+              <div class="punto activo"></div>
+              <div class="punto activo"></div>
+              <div class="punto"></div>
+            </div>
+            <span>Intermedio</span>
+          </div>
+          
+          <div class="tutorial-acciones">
+            <button class="btn btn-sm btn-tutorial" data-tutorial="fotografia">Ver Tutorial</button>
+          </div>
+        </div>
+
+        <!-- Tutorial 3 -->
+        <div class="tutorial-card">
+          <div class="tutorial-header">
+            <div class="tutorial-icono">🎬</div>
+            <div>
+              <h4>Edición con DaVinci</h4>
+              <span class="tutorial-duracion">6 horas</span>
+            </div>
+          </div>
+          
+          <p>Aprende edición profesional de video con DaVinci Resolve.</p>
+          
+          <div class="nivel-dificultad">
+            <span>Dificultad:</span>
+            <div class="nivel-puntos">
+              <div class="punto activo"></div>
+              <div class="punto activo"></div>
+              <div class="punto activo"></div>
+            </div>
+            <span>Avanzado</span>
+          </div>
+          
+          <div class="tutorial-acciones">
+            <button class="btn btn-sm btn-tutorial" data-tutorial="davinci">Ver Tutorial</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal de Tutorial -->
+  <div class="modal" id="modalTutorial">
+    <div class="modal-contenido">
+      <div class="modal-header">
+        <h3 class="modal-titulo" id="modalTitulo">Tutorial</h3>
+        <button class="modal-cerrar" id="modalCerrar">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Contenido dinámico del modal -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Nileynave. Creatividad Sin Fronteras - Empoderando a los creadores digitales.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="main.js"></script>
+  
+  <!-- JavaScript específico para CSF -->
+  <script>
+    // Datos de los tutoriales con videos reales
+    const tutoriales = {
+      gimp: {
+        titulo: "Introducción a GIMP - Curso Completo",
+        descripcion: "Aprende desde cero a utilizar GIMP, el poderoso editor de imágenes de código abierto. Este tutorial cubre desde la instalación hasta técnicas avanzadas de edición.",
+        duracion: "2 horas",
+        nivel: "Principiante",
+        instructor: "Ana López",
+        playlistUrl: "https://youtube.com/playlist?list=PLG1qdjD__qH64tCQ756M--FVvhHyCLUA9",
+        videoEmbed: "https://www.youtube.com/embed/videoseries?list=PLG1qdjD__qH64tCQ756M--FVvhHyCLUA9",
+        tieneVideo: true,
+        videos: [
+          {
+            titulo: "Instalación y Primeros Pasos",
+            duracion: "15 min",
+            url: "https://www.youtube.com/watch?v=QgygGU2OcC0&list=PLG1qdjD__qH64tCQ756M--FVvhHyCLUA9",
+            miniatura: "🎨"
+          },
+          {
+            titulo: "Interfaz y Herramientas Básicas",
+            duracion: "20 min",
+            url: "https://www.youtube.com/watch?v=2LKf4qsXe6E&list=PLG1qdjD__qH64tCQ756M--FVvhHyCLUA9",
+            miniatura: "🛠️"
+          },
+          {
+            titulo: "Trabajo con Capas",
+            duracion: "25 min",
+            url: "https://www.youtube.com/watch?v=7LXx9V9zH8s&list=PLG1qdjD__qH64tCQ756M--FVvhHyCLUA9",
+            miniatura: "📑"
+          }
+        ]
+      },
+      fotografia: {
+        titulo: "Fotografía Digital para Principiantes",
+        descripcion: "Domina los fundamentos de la fotografía digital, desde el manejo de la cámara hasta técnicas de composición y edición básica.",
+        duracion: "4 horas",
+        nivel: "Intermedio",
+        instructor: "Carlos Martínez",
+        playlistUrl: "https://youtube.com/playlist?list=PL6C4C76C3485A8FF8",
+        videoEmbed: "https://www.youtube.com/embed/videoseries?list=PL6C4C76C3485A8FF8",
+        tieneVideo: true,
+        videos: [
+          {
+            titulo: "Fundamentos de la Exposición",
+            duracion: "25 min",
+            url: "https://www.youtube.com/watch?v=6_B8pVoANyY&list=PL6C4C76C3485A8FF8",
+            miniatura: "📸"
+          },
+          {
+            titulo: "Composición Fotográfica",
+            duracion: "30 min",
+            url: "https://www.youtube.com/watch?v=7ZVyNjKSr0M&list=PL6C4C76C3485A8FF8",
+            miniatura: "🎯"
+          },
+          {
+            titulo: "Edición Básica con Darktable",
+            duracion: "35 min",
+            url: "https://www.youtube.com/watch?v=9e1Xk_9pTxQ&list=PL6C4C76C3485A8FF8",
+            miniatura: "🎨"
+          }
+        ]
+      },
+      davinci: {
+        titulo: "Edición Profesional con DaVinci Resolve",
+        descripcion: "Curso completo de edición de video profesional utilizando DaVinci Resolve. Aprende desde corte básico hasta colorización avanzada.",
+        duracion: "6 horas",
+        nivel: "Avanzado",
+        instructor: "María González",
+        playlistUrl: "https://youtube.com/playlist?list=PLwKBS6dVa2JY1X8nQ61tqRitbU-6V1x0_",
+        videoEmbed: "https://www.youtube.com/embed/videoseries?list=PLwKBS6dVa2JY1X8nQ61tqRitbU-6V1x0_",
+        tieneVideo: true,
+        videos: [
+          {
+            titulo: "Interfaz y Flujo de Trabajo",
+            duracion: "30 min",
+            url: "https://www.youtube.com/watch?v=3MqLwR-1Iww&list=PLwKBS6dVa2JY1X8nQ61tqRitbU-6V1x0_",
+            miniatura: "🎬"
+          },
+          {
+            titulo: "Edición Multicámara",
+            duracion: "45 min",
+            url: "https://www.youtube.com/watch?v=9e1Xk_9pT1Q&list=PLwKBS6dVa2JY1X8nQ61tqRitbU-6V1x0_",
+            miniatura: "🎥"
+          },
+          {
+            titulo: "Colorización Profesional",
+            duracion: "60 min",
+            url: "https://www.youtube.com/watch?v=9e1Xk_9pT2R&list=PLwKBS6dVa2JY1X8nQ61tqRitbU-6V1x0_",
+            miniatura: "🌈"
+          }
+        ]
+      }
+    };
+
+    // Variable global para controlar el iframe del video
+    let videoIframe = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Filtros de categorías
+      const categorias = document.querySelectorAll('.categoria-creativa');
+      const recursos = document.querySelectorAll('.recurso-card');
+
+      categorias.forEach(categoria => {
+        categoria.addEventListener('click', function() {
+          // Remover activo de todas las categorías
+          categorias.forEach(c => c.classList.remove('active'));
+          // Activar categoría clickeada
+          this.classList.add('active');
+          
+          const categoriaSeleccionada = this.dataset.categoria;
+          
+          // Filtrar recursos
+          recursos.forEach(recurso => {
+            if (categoriaSeleccionada === 'todas' || recurso.dataset.categoria === categoriaSeleccionada) {
+              recurso.style.display = 'block';
+            } else {
+              recurso.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Efectos hover mejorados para tarjetas
+      recursos.forEach(recurso => {
+        recurso.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        
+        recurso.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+
+      // Sistema de modales para tutoriales
+      const modal = document.getElementById('modalTutorial');
+      const modalTitulo = document.getElementById('modalTitulo');
+      const modalBody = document.getElementById('modalBody');
+      const modalCerrar = document.getElementById('modalCerrar');
+      const botonesTutorial = document.querySelectorAll('.btn-tutorial');
+
+      // Abrir modal
+      botonesTutorial.forEach(boton => {
+        boton.addEventListener('click', function() {
+          const tutorialId = this.dataset.tutorial;
+          const tutorial = tutoriales[tutorialId];
+          
+          if (tutorial) {
+            mostrarTutorial(tutorial);
+          }
+        });
+      });
+
+      // Cerrar modal - CORREGIDO: Detener el video al cerrar
+      modalCerrar.addEventListener('click', function() {
+        cerrarModal();
+        detenerVideo();
+      });
+      
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          cerrarModal();
+          detenerVideo();
+        }
+      });
+
+      // Cerrar con ESC - CORREGIDO: Detener el video al cerrar
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+          cerrarModal();
+          detenerVideo();
+        }
+      });
+
+      // Función para detener la reproducción del video
+      function detenerVideo() {
+        if (videoIframe) {
+          // Reemplazar el src del iframe para detener la reproducción
+          const src = videoIframe.src;
+          videoIframe.src = '';
+          videoIframe.src = src; // Esto detiene el video
+          videoIframe = null;
+        }
+      }
+
+      function mostrarTutorial(tutorial) {
+        modalTitulo.textContent = tutorial.titulo;
+        
+        // Determinar contenido del video
+        let videoContenido = '';
+        if (tutorial.tieneVideo && tutorial.videoEmbed) {
+          videoContenido = `
+            <iframe 
+              class="video-embed" 
+              src="${tutorial.videoEmbed}" 
+              title="${tutorial.titulo}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+          `;
+        } else {
+          videoContenido = `
+            <div class="video-placeholder">
+              <div class="placeholder-icono">🎬</div>
+              <div class="placeholder-texto">
+                Video no disponible. Haz clic en "Ir a YouTube" para ver el tutorial completo.
+              </div>
+            </div>
+          `;
+        }
+
+        modalBody.innerHTML = `
+          <div class="video-container">
+            ${videoContenido}
+          </div>
+          
+          <div class="video-info">
+            <p class="video-descripcion">${tutorial.descripcion}</p>
+            
+            <div class="video-metadata">
+              <div class="metadata-item">
+                <div class="metadata-label">Duración</div>
+                <div class="metadata-value">${tutorial.duracion}</div>
+              </div>
+              <div class="metadata-item">
+                <div class="metadata-label">Nivel</div>
+                <div class="metadata-value">${tutorial.nivel}</div>
+              </div>
+              <div class="metadata-item">
+                <div class="metadata-label">Instructor</div>
+                <div class="metadata-value">${tutorial.instructor}</div>
+              </div>
+              <div class="metadata-item">
+                <div class="metadata-label">Videos</div>
+                <div class="metadata-value">${tutorial.videos.length}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="video-enlaces">
+            <a href="${tutorial.playlistUrl}" class="btn btn-video btn-externo" target="_blank">
+              🎥 Ir a YouTube
+            </a>
+            <button class="btn btn-video btn-outline" id="btnListaVideos">
+              📋 Ver Lista de Videos
+            </button>
+          </div>
+
+          <div class="tutoriales-lista" id="listaVideos" style="display: none;">
+            <h4>Lista de Videos del Curso <span class="video-indicador">Haz clic para ver</span></h4>
+            <ul class="lista-tutoriales">
+              ${tutorial.videos.map((video, index) => `
+                <li data-url="${video.url}">
+                  <div class="tutorial-mini">
+                    <div class="tutorial-mini-icono">${video.miniatura}</div>
+                    <div class="tutorial-mini-info">
+                      <div class="tutorial-mini-titulo">${video.titulo}</div>
+                      <div class="tutorial-mini-duracion">${video.duracion}</div>
+                    </div>
+                  </div>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+
+        // Guardar referencia al iframe del video
+        videoIframe = modalBody.querySelector('.video-embed');
+
+        // Mostrar/ocultar lista de videos
+        const btnListaVideos = document.getElementById('btnListaVideos');
+        const listaVideos = document.getElementById('listaVideos');
+
+        btnListaVideos.addEventListener('click', function() {
+          if (listaVideos.style.display === 'none') {
+            listaVideos.style.display = 'block';
+            btnListaVideos.textContent = '📋 Ocultar Lista';
+          } else {
+            listaVideos.style.display = 'none';
+            btnListaVideos.textContent = '📋 Ver Lista de Videos';
+          }
+        });
+
+        // Navegación por lista de videos
+        const itemsVideo = document.querySelectorAll('.lista-tutoriales li');
+        itemsVideo.forEach(item => {
+          item.addEventListener('click', function() {
+            const url = this.dataset.url;
+            window.open(url, '_blank');
+          });
+        });
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function cerrarModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Sistema de Modo Claro/Oscuro
+    document.addEventListener('DOMContentLoaded', function() {
+      const temaToggle = document.getElementById('temaToggle');
+      const temaIcono = temaToggle.querySelector('.tema-icono');
+      const body = document.body;
+
+      // Cargar tema guardado
+      const temaGuardado = localStorage.getItem('tema') || 'claro';
+      body.setAttribute('data-tema', temaGuardado);
+      actualizarIconoTema(temaGuardado);
+
+      // Alternar tema
+      temaToggle.addEventListener('click', function() {
+        const temaActual = body.getAttribute('data-tema');
+        const nuevoTema = temaActual === 'claro' ? 'oscuro' : 'claro';
+        
+        body.setAttribute('data-tema', nuevoTema);
+        localStorage.setItem('tema', nuevoTema);
+        actualizarIconoTema(nuevoTema);
+        
+        // Efecto de transición
+        temaToggle.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          temaToggle.style.transform = 'scale(1)';
+        }, 150);
+      });
+
+      function actualizarIconoTema(tema) {
+        temaIcono.textContent = tema === 'claro' ? '🌙' : '☀️';
+      }
+
+      // Detectar preferencia del sistema
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function detectarTemaSistema(e) {
+        // Solo aplicar si no hay tema guardado manualmente
+        if (!localStorage.getItem('tema')) {
+          const temaSistema = e.matches ? 'oscuro' : 'claro';
+          body.setAttribute('data-tema', temaSistema);
+          actualizarIconoTema(temaSistema);
+        }
+      }
+
+      // Escuchar cambios en la preferencia del sistema
+      mediaQuery.addEventListener('change', detectarTemaSistema);
+      
+      // Aplicar tema del sistema al cargar (si no hay preferencia guardada)
+      if (!localStorage.getItem('tema')) {
+        detectarTemaSistema(mediaQuery);
+      }
+    });
+  </script>
+</body>
+</html>

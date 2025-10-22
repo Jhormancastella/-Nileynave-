@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Navegación Esencial - Herramientas para navegar con privacidad, seguridad y libertad en el océano digital." />
+  <title>Navegación Esencial - Nileynave</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href=" https://res.cloudinary.com/dipv76dpn/image/upload/v1761056303/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__1_poda8e.png" />
+
+  <!-- CSS General -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- CSS Específico para NE -->
+  <style>
+    /* ===== VARIABLES PARA MODO OSCURO ===== */
+    :root {
+      /* Colores modo claro (default) */
+      --azul-profundo: #1a2b4d;
+      --azul-medio: #2c5282;
+      --azul-claro: #3182ce;
+      --arena: #fdf6e3;
+      --blanco: #ffffff;
+      --gris-claro: #f8f9fa;
+      --gris-medio: #e2e8f0;
+      --gris-oscuro: #4a5568;
+      --dorado: #f6b93b;
+      --verde: #38a169;
+      --rojo: #e53e3e;
+      
+      /* Fondos modo claro */
+      --fondo-primario: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+      --fondo-secundario: #ffffff;
+      --fondo-terciario: #f8f9fa;
+      
+      /* Textos modo claro */
+      --texto-primario: #1a2b4d;
+      --texto-secundario: #4a5568;
+      --texto-terciario: #718096;
+      
+      /* Sombras modo claro */
+      --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --sombra-fuerte: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== MODO OSCURO ===== */
+    [data-tema="oscuro"] {
+      /* Colores modo oscuro */
+      --azul-profundo: #ebf8ff;
+      --azul-medio: #90cdf4;
+      --azul-claro: #63b3ed;
+      --arena: #2d3748;
+      --blanco: #1a202c;
+      --gris-claro: #2d3748;
+      --gris-medio: #4a5568;
+      --gris-oscuro: #a0aec0;
+      --dorado: #f6ad55;
+      --verde: #68d391;
+      --rojo: #fc8181;
+      
+      /* Fondos modo oscuro */
+      --fondo-primario: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      --fondo-secundario: #2d3748;
+      --fondo-terciario: #4a5568;
+      
+      /* Textos modo oscuro */
+      --texto-primario: #f7fafc;
+      --texto-secundario: #e2e8f0;
+      --texto-terciario: #cbd5e0;
+      
+      /* Sombras modo oscuro */
+      --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.3);
+      --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --sombra-fuerte: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ===== APLICAR VARIABLES A ELEMENTOS ===== */
+    body {
+      background: var(--fondo-primario);
+      color: var(--texto-primario);
+    }
+
+    .navbar {
+      background: var(--fondo-secundario);
+      box-shadow: var(--sombra-media);
+    }
+
+    .navbar-scrolled {
+      background: rgba(var(--fondo-secundario-rgb), 0.98);
+    }
+
+    .card {
+      background: var(--fondo-secundario);
+      box-shadow: var(--sombra-media);
+    }
+
+    .card:hover {
+      box-shadow: var(--sombra-fuerte);
+    }
+
+    /* ===== CORRECCIÓN DEL FOOTER ===== */
+    .footer {
+      background: var(--azul-profundo);
+      color: var(--texto-secundario);
+    }
+
+    /* En modo oscuro, el footer necesita colores específicos */
+    [data-tema="oscuro"] .footer {
+      background: #1a365d;
+      color: #cbd5e0;
+      border-top: 1px solid #2d3748;
+    }
+
+    /* ===== BOTÓN TOGGLE TEMA ===== */
+    .tema-toggle {
+      background: none;
+      border: 2px solid var(--azul-medio);
+      color: var(--azul-medio);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-left: var(--espacio-sm);
+    }
+
+    .tema-toggle:hover {
+      background: var(--azul-medio);
+      color: var(--blanco);
+      transform: rotate(15deg);
+    }
+
+    .tema-icono {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    [data-tema="oscuro"] .tema-icono {
+      transform: rotate(180deg);
+    }
+
+    /* ===== ESTILOS ESPECÍFICOS PARA NE ===== */
+    .filtros {
+      background: var(--fondo-secundario);
+      padding: var(--espacio-md);
+      border-radius: var(--radio-borde-lg);
+      box-shadow: var(--sombra-media);
+      margin-bottom: var(--espacio-xl);
+    }
+
+    .filtros-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--espacio-md);
+      align-items: end;
+    }
+
+    .herramientas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: var(--espacio-lg);
+    }
+
+    .herramienta-card {
+      background: var(--fondo-secundario);
+      border-radius: var(--radio-borde-lg);
+      padding: var(--espacio-lg);
+      box-shadow: var(--sombra-media);
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--azul-medio);
+    }
+
+    .herramienta-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--sombra-fuerte);
+    }
+
+    .herramienta-header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--espacio-md);
+      margin-bottom: var(--espacio-md);
+    }
+
+    .herramienta-icono {
+      font-size: 2.5rem;
+      flex-shrink: 0;
+    }
+
+    .herramienta-info h3 {
+      margin-bottom: var(--espacio-xs);
+      color: var(--texto-primario);
+    }
+
+    .herramienta-categoria {
+      display: inline-block;
+      background: var(--gris-claro);
+      color: var(--azul-medio);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: var(--espacio-xs);
+    }
+
+    .herramienta-descripcion {
+      color: var(--texto-secundario);
+      margin-bottom: var(--espacio-md);
+      line-height: 1.5;
+    }
+
+    .herramienta-caracteristicas {
+      margin-bottom: var(--espacio-md);
+    }
+
+    .herramienta-caracteristicas h4 {
+      color: var(--azul-medio);
+      margin-bottom: var(--espacio-xs);
+      font-size: 0.9rem;
+    }
+
+    .caracteristicas-lista {
+      list-style: none;
+      padding: 0;
+    }
+
+    .caracteristicas-lista li {
+      padding: 0.2rem 0;
+      color: var(--texto-secundario);
+      position: relative;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .caracteristicas-lista li:before {
+      content: "✓";
+      color: var(--verde);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .herramienta-enlaces {
+      display: flex;
+      gap: var(--espacio-sm);
+      flex-wrap: wrap;
+    }
+
+    .nivel-privacidad {
+      display: flex;
+      align-items: center;
+      gap: var(--espacio-xs);
+      margin-top: var(--espacio-sm);
+      font-size: 0.8rem;
+      color: var(--texto-secundario);
+    }
+
+    .nivel-barra {
+      width: 60px;
+      height: 4px;
+      background: var(--gris-medio);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .nivel-fill {
+      height: 100%;
+      background: var(--verde);
+      border-radius: 2px;
+    }
+
+    .alto { width: 90%; }
+    .medio { width: 60%; }
+    .bajo { width: 30%; }
+
+    /* ===== MEJORAS VISUALES MODO OSCURO ===== */
+    [data-tema="oscuro"] .logo {
+      filter: brightness(0.9);
+    }
+
+    [data-tema="oscuro"] .menu a {
+      color: var(--texto-secundario);
+    }
+
+    [data-tema="oscuro"] .menu a:hover,
+    [data-tema="oscuro"] .menu a.active {
+      color: var(--blanco);
+      background: var(--azul-medio);
+    }
+
+    [data-tema="oscuro"] .hero .tagline {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .hero .subtitle {
+      color: var(--texto-secundario);
+    }
+
+    [data-tema="oscuro"] .herramienta-categoria {
+      background: var(--gris-medio);
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .herramienta-caracteristicas h4 {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .nivel-barra {
+      background: var(--gris-medio);
+    }
+
+    /* ===== MEJORAS ADICIONALES PARA MODO OSCURO ===== */
+    [data-tema="oscuro"] .btn {
+      background: var(--azul-medio);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .btn:hover {
+      background: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .btn-outline {
+      background: transparent;
+      border: 2px solid var(--azul-medio);
+      color: var(--azul-medio);
+    }
+
+    [data-tema="oscuro"] .btn-outline:hover {
+      background: var(--azul-medio);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .btn-secondary {
+      background: var(--gris-medio);
+      color: var(--texto-primario);
+    }
+
+    [data-tema="oscuro"] .btn-secondary:hover {
+      background: var(--gris-oscuro);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .form-control {
+      background: var(--fondo-terciario);
+      border-color: var(--gris-medio);
+      color: var(--texto-primario);
+    }
+
+    [data-tema="oscuro"] .form-control:focus {
+      border-color: var(--azul-medio);
+    }
+
+    [data-tema="oscuro"] .form-label {
+      color: var(--texto-secundario);
+    }
+
+    /* ===== TRANSICIONES SUAVES ===== */
+    body,
+    .navbar,
+    .card,
+    .btn,
+    .menu a,
+    .footer,
+    .herramienta-card,
+    .filtros {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .herramientas-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .herramienta-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .filtros-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-tema="claro">
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link" aria-label="Ir al inicio de Nileynave">
+        <img 
+          src="https://res.cloudinary.com/dipv76dpn/image/upload/v1761091782/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__2_mt4o3k.png" 
+          alt="Logo Nileynave" 
+          class="logo"
+        />
+      </a>
+    </div>
+
+    <div class="nav-title">
+      <h1>Nileynave</h1>
+      <div class="tagline">Navegación Esencial</div>
+    </div>
+
+    <div class="menu-container">
+      <div class="menu" id="menu">
+        <a href="index.html">Inicio</a>
+        <a href="#herramientas" class="active">Herramientas</a>
+        <a href="#consejos">Consejos</a>
+      </div>
+
+      <!-- Botón Toggle Tema -->
+      <button class="tema-toggle" id="temaToggle" aria-label="Cambiar tema">
+        <span class="tema-icono">🌙</span>
+      </button>
+
+      <div class="hamburger" id="hamburger" aria-label="Menú de navegación">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <p class="tagline">Navegación Esencial</p>
+    <p class="subtitle">Herramientas para navegar con privacidad, seguridad y libertad en el océano digital</p>
+  </header>
+
+  <!-- Filtros -->
+  <section class="section">
+    <div class="container">
+      <div class="filtros">
+        <div class="filtros-grid">
+          <div class="form-group">
+            <label class="form-label">Categoría</label>
+            <select class="form-control form-select" id="filtroCategoria">
+              <option value="todas">Todas las categorías</option>
+              <option value="navegador">Navegadores</option>
+              <option value="buscador">Buscadores</option>
+              <option value="vpn">VPN</option>
+              <option value="extension">Extensiones</option>
+              <option value="bloqueador">Bloqueadores</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Nivel de privacidad</label>
+            <select class="form-control form-select" id="filtroPrivacidad">
+              <option value="todos">Todos los niveles</option>
+              <option value="alto">Alto</option>
+              <option value="medio">Medio</option>
+              <option value="bajo">Bajo</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Precio</label>
+            <select class="form-control form-select" id="filtroPrecio">
+              <option value="todos">Todos los precios</option>
+              <option value="gratuito">Gratuito</option>
+              <option value="premium">Premium</option>
+              <option value="freemium">Freemium</option>
+            </select>
+          </div>
+          
+          <button class="btn btn-secondary" id="btnLimpiarFiltros">Limpiar filtros</button>
+        </div>
+      </div>
+
+      <!-- Herramientas -->
+      <div id="herramientas">
+        <div class="section-header">
+          <h2>Herramientas de Navegación</h2>
+          <p>Selección curada de las mejores herramientas para proteger tu privacidad online</p>
+        </div>
+
+        <div class="herramientas-grid">
+          
+          <!-- Herramienta 1 -->
+          <div class="herramienta-card" data-categoria="navegador" data-privacidad="alto" data-precio="gratuito">
+            <div class="herramienta-header">
+              <div class="herramienta-icono">🌐</div>
+              <div class="herramienta-info">
+                <span class="herramienta-categoria">Navegador</span>
+                <h3>Firefox Focus</h3>
+                <div class="nivel-privacidad">
+                  <span>Privacidad:</span>
+                  <div class="nivel-barra">
+                    <div class="nivel-fill alto"></div>
+                  </div>
+                  <span>Alto</span>
+                </div>
+              </div>
+            </div>
+            
+            <p class="herramienta-descripcion">
+              Navegador móvil enfocado en la privacidad que bloquea automáticamente rastreadores y borra tu historial al cerrar.
+            </p>
+            
+            <div class="herramienta-caracteristicas">
+              <h4>Características principales:</h4>
+              <ul class="caracteristicas-lista">
+                <li>Bloqueo automático de rastreadores</li>
+                <li>Navegación anónima por defecto</li>
+                <li>Interfaz minimalista</li>
+                <li>Sin historial de navegación</li>
+                <li>Bloqueador de anuncios integrado</li>
+              </ul>
+            </div>
+            
+            <div class="herramienta-enlaces">
+              <a href="https://www.mozilla.org/firefox/browsers/mobile/focus/" class="btn btn-sm" target="_blank">Descargar</a>
+              <a href="https://support.mozilla.org/firefox-focus" class="btn btn-sm btn-outline" target="_blank">Documentación</a>
+            </div>
+          </div>
+
+          <!-- Herramienta 2 -->
+          <div class="herramienta-card" data-categoria="buscador" data-privacidad="alto" data-precio="gratuito">
+            <div class="herramienta-header">
+              <div class="herramienta-icono">🔍</div>
+              <div class="herramienta-info">
+                <span class="herramienta-categoria">Buscador</span>
+                <h3>DuckDuckGo</h3>
+                <div class="nivel-privacidad">
+                  <span>Privacidad:</span>
+                  <div class="nivel-barra">
+                    <div class="nivel-fill alto"></div>
+                  </div>
+                  <span>Alto</span>
+                </div>
+              </div>
+            </div>
+            
+            <p class="herramienta-descripcion">
+              Buscador que no te rastrea, mostrando los mismos resultados para todas las búsquedas sin filtros burbuja.
+            </p>
+            
+            <div class="herramienta-caracteristicas">
+              <h4>Características principales:</h4>
+              <ul class="caracteristicas-lista">
+                <li>Búsquedas sin rastreo</li>
+                <li>Sin filtros burbuja</li>
+                <li>Extensiones de privacidad</li>
+                <li>Bloqueo de rastreadores</li>
+                <li>Encriptación HTTPS forzada</li>
+              </ul>
+            </div>
+            
+            <div class="herramienta-enlaces">
+              <a href="https://duckduckgo.com/" class="btn btn-sm" target="_blank">Visitar</a>
+              <a href="https://spreadprivacy.com/" class="btn btn-sm btn-outline" target="_blank">Blog</a>
+            </div>
+          </div>
+
+          <!-- Herramienta 3 -->
+          <div class="herramienta-card" data-categoria="vpn" data-privacidad="alto" data-precio="freemium">
+            <div class="herramienta-header">
+              <div class="herramienta-icono">🛡️</div>
+              <div class="herramienta-info">
+                <span class="herramienta-categoria">VPN</span>
+                <h3>ProtonVPN</h3>
+                <div class="nivel-privacidad">
+                  <span>Privacidad:</span>
+                  <div class="nivel-barra">
+                    <div class="nivel-fill alto"></div>
+                  </div>
+                  <span>Alto</span>
+                </div>
+              </div>
+            </div>
+            
+            <p class="herramienta-descripcion">
+              VPN segura desarrollada por CERN, con versión gratuita y políticas estrictas de no registro.
+            </p>
+            
+            <div class="herramienta-caracteristicas">
+              <h4>Características principales:</h4>
+              <ul class="caracteristicas-lista">
+                <li>Política de no registro</li>
+                <li>Encriptación fuerte</li>
+                <li>Versión gratuita disponible</li>
+                <li>Kill Switch integrado</li>
+                <li>Servidores optimizados</li>
+              </ul>
+            </div>
+            
+            <div class="herramienta-enlaces">
+              <a href="https://protonvpn.com/" class="btn btn-sm" target="_blank">Descargar</a>
+              <a href="https://protonvpn.com/support/" class="btn btn-sm btn-outline" target="_blank">Soporte</a>
+            </div>
+          </div>
+
+          <!-- Herramienta 4 -->
+          <div class="herramienta-card" data-categoria="extension" data-privacidad="medio" data-precio="gratuito">
+            <div class="herramienta-header">
+              <div class="herramienta-icono">🔧</div>
+              <div class="herramienta-info">
+                <span class="herramienta-categoria">Extensión</span>
+                <h3>uBlock Origin</h3>
+                <div class="nivel-privacidad">
+                  <span>Privacidad:</span>
+                  <div class="nivel-barra">
+                    <div class="nivel-fill medio"></div>
+                  </div>
+                  <span>Medio</span>
+                </div>
+              </div>
+            </div>
+            
+            <p class="herramienta-descripcion">
+              Bloqueador de anuncios eficiente y ligero que protege tu privacidad bloqueando rastreadores.
+            </p>
+            
+            <div class="herramienta-caracteristicas">
+              <h4>Características principales:</h4>
+              <ul class="caracteristicas-lista">
+                <li>Bajo consumo de recursos</li>
+                <li>Bloqueo de anuncios y rastreadores</li>
+                <li>Fácil de usar</li>
+                <li>Actualizaciones frecuentes</li>
+                <li>Open Source</li>
+              </ul>
+            </div>
+            
+            <div class="herramienta-enlaces">
+              <a href="https://ublockorigin.com/" class="btn btn-sm" target="_blank">Instalar</a>
+              <a href="https://github.com/gorhill/uBlock" class="btn btn-sm btn-outline" target="_blank">GitHub</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Consejos -->
+  <section id="consejos" class="section" style="background: var(--gris-claro);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Consejos de Privacidad</h2>
+        <p>Mejores prácticas para mantener tu privacidad online</p>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>🔒 Navegación Segura</h3>
+          <ul class="caracteristicas-lista">
+            <li>Usa siempre HTTPS</li>
+            <li>Actualiza tu navegador regularmente</li>
+            <li>Evita redes WiFi públicas sin VPN</li>
+            <li>Limpia cookies regularmente</li>
+            <li>Usa modo incógnito cuando sea necesario</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>🛡️ Protección de Datos</h3>
+          <ul class="caracteristicas-lista">
+            <li>Usa contraseñas únicas y fuertes</li>
+            <li>Activa la autenticación de dos factores</li>
+            <li>Revisa los permisos de las extensiones</li>
+            <li>Configura la privacidad en redes sociales</li>
+            <li>Usa gestores de contraseñas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Nileynave. Navegación Esencial - Protegiendo tu privacidad digital.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="main.js"></script>
+  
+  <!-- JavaScript específico para NE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Filtros de herramientas
+      const filtroCategoria = document.getElementById('filtroCategoria');
+      const filtroPrivacidad = document.getElementById('filtroPrivacidad');
+      const filtroPrecio = document.getElementById('filtroPrecio');
+      const btnLimpiarFiltros = document.getElementById('btnLimpiarFiltros');
+      const herramientas = document.querySelectorAll('.herramienta-card');
+
+      function filtrarHerramientas() {
+        const categoria = filtroCategoria.value;
+        const privacidad = filtroPrivacidad.value;
+        const precio = filtroPrecio.value;
+
+        herramientas.forEach(herramienta => {
+          const cumpleCategoria = categoria === 'todas' || herramienta.dataset.categoria === categoria;
+          const cumplePrivacidad = privacidad === 'todos' || herramienta.dataset.privacidad === privacidad;
+          const cumplePrecio = precio === 'todos' || herramienta.dataset.precio === precio;
+
+          if (cumpleCategoria && cumplePrivacidad && cumplePrecio) {
+            herramienta.style.display = 'block';
+          } else {
+            herramienta.style.display = 'none';
+          }
+        });
+      }
+
+      // Event listeners para filtros
+      filtroCategoria.addEventListener('change', filtrarHerramientas);
+      filtroPrivacidad.addEventListener('change', filtrarHerramientas);
+      filtroPrecio.addEventListener('change', filtrarHerramientas);
+
+      btnLimpiarFiltros.addEventListener('click', function() {
+        filtroCategoria.value = 'todas';
+        filtroPrivacidad.value = 'todos';
+        filtroPrecio.value = 'todos';
+        filtrarHerramientas();
+      });
+
+      // Inicializar filtros
+      filtrarHerramientas();
+    });
+
+    // Sistema de Modo Claro/Oscuro
+    document.addEventListener('DOMContentLoaded', function() {
+      const temaToggle = document.getElementById('temaToggle');
+      const temaIcono = temaToggle.querySelector('.tema-icono');
+      const body = document.body;
+
+      // Cargar tema guardado
+      const temaGuardado = localStorage.getItem('tema') || 'claro';
+      body.setAttribute('data-tema', temaGuardado);
+      actualizarIconoTema(temaGuardado);
+
+      // Alternar tema
+      temaToggle.addEventListener('click', function() {
+        const temaActual = body.getAttribute('data-tema');
+        const nuevoTema = temaActual === 'claro' ? 'oscuro' : 'claro';
+        
+        body.setAttribute('data-tema', nuevoTema);
+        localStorage.setItem('tema', nuevoTema);
+        actualizarIconoTema(nuevoTema);
+        
+        // Efecto de transición
+        temaToggle.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          temaToggle.style.transform = 'scale(1)';
+        }, 150);
+      });
+
+      function actualizarIconoTema(tema) {
+        temaIcono.textContent = tema === 'claro' ? '🌙' : '☀️';
+      }
+
+      // Detectar preferencia del sistema
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function detectarTemaSistema(e) {
+        // Solo aplicar si no hay tema guardado manualmente
+        if (!localStorage.getItem('tema')) {
+          const temaSistema = e.matches ? 'oscuro' : 'claro';
+          body.setAttribute('data-tema', temaSistema);
+          actualizarIconoTema(temaSistema);
+        }
+      }
+
+      // Escuchar cambios en la preferencia del sistema
+      mediaQuery.addEventListener('change', detectarTemaSistema);
+      
+      // Aplicar tema del sistema al cargar (si no hay preferencia guardada)
+      if (!localStorage.getItem('tema')) {
+        detectarTemaSistema(mediaQuery);
+      }
+    });
+  </script>
+</body>
+</html>

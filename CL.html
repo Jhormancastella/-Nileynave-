@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Conocimiento Libre - Biblioteca digital con libros, cursos y recursos educativos en múltiples formatos." />
+  <title>Conocimiento Libre - Nileynave</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dipv76dpn/image/upload/v1761056303/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__1_poda8e.png" />
+
+  <!-- CSS General -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- CSS Específico para CL -->
+  <style>
+    /* ===== VARIABLES PARA MODO OSCURO ===== */
+    :root {
+      /* Colores modo claro (default) */
+      --azul-profundo: #1a2b4d;
+      --azul-medio: #2c5282;
+      --azul-claro: #3182ce;
+      --arena: #fdf6e3;
+      --blanco: #ffffff;
+      --gris-claro: #f8f9fa;
+      --gris-medio: #e2e8f0;
+      --gris-oscuro: #4a5568;
+      --dorado: #f6b93b;
+      --verde: #38a169;
+      --rojo: #e53e3e;
+      
+      /* Fondos modo claro */
+      --fondo-primario: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+      --fondo-secundario: #ffffff;
+      --fondo-terciario: #f8f9fa;
+      
+      /* Textos modo claro */
+      --texto-primario: #1a2b4d;
+      --texto-secundario: #4a5568;
+      --texto-terciario: #718096;
+      
+      /* Sombras modo claro */
+      --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --sombra-fuerte: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== MODO OSCURO ===== */
+    [data-tema="oscuro"] {
+      /* Colores modo oscuro */
+      --azul-profundo: #ebf8ff;
+      --azul-medio: #90cdf4;
+      --azul-claro: #63b3ed;
+      --arena: #2d3748;
+      --blanco: #1a202c;
+      --gris-claro: #2d3748;
+      --gris-medio: #4a5568;
+      --gris-oscuro: #a0aec0;
+      --dorado: #f6ad55;
+      --verde: #68d391;
+      --rojo: #fc8181;
+      
+      /* Fondos modo oscuro */
+      --fondo-primario: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      --fondo-secundario: #2d3748;
+      --fondo-terciario: #4a5568;
+      
+      /* Textos modo oscuro */
+      --texto-primario: #f7fafc;
+      --texto-secundario: #e2e8f0;
+      --texto-terciario: #cbd5e0;
+      
+      /* Sombras modo oscuro */
+      --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.3);
+      --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --sombra-fuerte: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ===== APLICAR VARIABLES A ELEMENTOS ===== */
+    body {
+      background: var(--fondo-primario);
+      color: var(--texto-primario);
+    }
+
+    .navbar {
+      background: var(--fondo-secundario);
+      box-shadow: var(--sombra-media);
+    }
+
+    .navbar-scrolled {
+      background: rgba(var(--fondo-secundario-rgb), 0.98);
+    }
+
+    .card {
+      background: var(--fondo-secundario);
+      box-shadow: var(--sombra-media);
+    }
+
+    .card:hover {
+      box-shadow: var(--sombra-fuerte);
+    }
+
+    /* ===== CORRECCIÓN DEL FOOTER ===== */
+    .footer {
+      background: var(--azul-profundo);
+      color: var(--texto-secundario);
+    }
+
+    /* En modo oscuro, el footer necesita colores específicos */
+    [data-tema="oscuro"] .footer {
+      background: #1a365d;
+      color: #cbd5e0;
+      border-top: 1px solid #2d3748;
+    }
+
+    /* ===== BOTÓN TOGGLE TEMA ===== */
+    .tema-toggle {
+      background: none;
+      border: 2px solid var(--azul-medio);
+      color: var(--azul-medio);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-left: var(--espacio-sm);
+    }
+
+    .tema-toggle:hover {
+      background: var(--azul-medio);
+      color: var(--blanco);
+      transform: rotate(15deg);
+    }
+
+    .tema-icono {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    [data-tema="oscuro"] .tema-icono {
+      transform: rotate(180deg);
+    }
+
+    /* ===== ESTILOS ESPECÍFICOS PARA CL ===== */
+    .biblioteca-header {
+      text-align: center;
+      margin-bottom: var(--espacio-xl);
+    }
+
+    .estadisticas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--espacio-md);
+      margin-bottom: var(--espacio-xl);
+    }
+
+    .estadistica-card {
+      background: var(--fondo-secundario);
+      padding: var(--espacio-md);
+      border-radius: var(--radio-borde);
+      text-align: center;
+      box-shadow: var(--sombra-suave);
+    }
+
+    .estadistica-numero {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--azul-medio);
+      display: block;
+    }
+
+    .estadistica-texto {
+      font-size: 0.9rem;
+      color: var(--texto-secundario);
+    }
+
+    .libros-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--espacio-lg);
+    }
+
+    .libro-card {
+      background: var(--fondo-secundario);
+      border-radius: var(--radio-borde-lg);
+      overflow: hidden;
+      box-shadow: var(--sombra-media);
+      transition: all 0.3s ease;
+    }
+
+    .libro-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--sombra-fuerte);
+    }
+
+    .libro-portada {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: linear-gradient(135deg, var(--azul-medio), var(--azul-profundo));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 3rem;
+    }
+
+    .libro-contenido {
+      padding: var(--espacio-md);
+    }
+
+    .libro-header {
+      margin-bottom: var(--espacio-sm);
+    }
+
+    .libro-titulo {
+      font-size: 1.2rem;
+      margin-bottom: var(--espacio-xs);
+      color: var(--texto-primario);
+      line-height: 1.3;
+    }
+
+    .libro-autor {
+      color: var(--texto-secundario);
+      font-size: 0.9rem;
+      margin-bottom: var(--espacio-xs);
+    }
+
+    .libro-descripcion {
+      color: var(--texto-secundario);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: var(--espacio-md);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .libro-metadata {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--espacio-md);
+      font-size: 0.8rem;
+      color: var(--texto-secundario);
+    }
+
+    .libro-formato {
+      background: var(--gris-claro);
+      color: var(--azul-medio);
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .libro-acciones {
+      display: flex;
+      gap: var(--espacio-xs);
+      flex-wrap: wrap;
+    }
+
+    .btn-descarga {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .btn-preview {
+      background: var(--gris-medio);
+      color: var(--texto-primario);
+    }
+
+    .btn-preview:hover {
+      background: var(--gris-oscuro);
+      color: white;
+    }
+
+    .filtros-rapidos {
+      display: flex;
+      gap: var(--espacio-sm);
+      flex-wrap: wrap;
+      margin-bottom: var(--espacio-lg);
+      justify-content: center;
+    }
+
+    .filtro-rapido {
+      background: var(--fondo-secundario);
+      border: 2px solid var(--gris-medio);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      color: var(--texto-primario);
+    }
+
+    .filtro-rapido:hover,
+    .filtro-rapido.active {
+      background: var(--azul-medio);
+      color: white;
+      border-color: var(--azul-medio);
+    }
+
+    .categoria-seccion {
+      margin-bottom: var(--espacio-xxl);
+    }
+
+    .categoria-titulo {
+      border-bottom: 3px solid var(--azul-medio);
+      padding-bottom: var(--espacio-xs);
+      margin-bottom: var(--espacio-lg);
+      color: var(--texto-primario);
+    }
+
+    /* ===== MEJORAS VISUALES MODO OSCURO ===== */
+    [data-tema="oscuro"] .logo {
+      filter: brightness(0.9);
+    }
+
+    [data-tema="oscuro"] .menu a {
+      color: var(--texto-secundario);
+    }
+
+    [data-tema="oscuro"] .menu a:hover,
+    [data-tema="oscuro"] .menu a.active {
+      color: var(--blanco);
+      background: var(--azul-medio);
+    }
+
+    [data-tema="oscuro"] .hero .tagline {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .hero .subtitle {
+      color: var(--texto-secundario);
+    }
+
+    [data-tema="oscuro"] .estadistica-numero {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .libro-formato {
+      background: var(--gris-medio);
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .categoria-titulo {
+      color: var(--texto-primario);
+      border-bottom-color: var(--azul-claro);
+    }
+
+    /* ===== MEJORAS ADICIONALES PARA MODO OSCURO ===== */
+    [data-tema="oscuro"] .btn {
+      background: var(--azul-medio);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .btn:hover {
+      background: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .btn-preview {
+      background: var(--gris-medio);
+      color: var(--texto-primario);
+    }
+
+    [data-tema="oscuro"] .btn-preview:hover {
+      background: var(--gris-oscuro);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .filtro-rapido {
+      background: var(--fondo-terciario);
+      color: var(--texto-primario);
+      border-color: var(--gris-medio);
+    }
+
+    [data-tema="oscuro"] .filtro-rapido:hover,
+    [data-tema="oscuro"] .filtro-rapido.active {
+      background: var(--azul-medio);
+      color: var(--blanco);
+      border-color: var(--azul-medio);
+    }
+
+    /* ===== TRANSICIONES SUAVES ===== */
+    body,
+    .navbar,
+    .card,
+    .btn,
+    .menu a,
+    .footer,
+    .libro-card,
+    .estadistica-card,
+    .filtro-rapido {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .libros-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .estadisticas {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .libro-acciones {
+        flex-direction: column;
+      }
+      
+      .btn-descarga {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body data-tema="claro">
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link" aria-label="Ir al inicio de Nileynave">
+        <img 
+          src="https://res.cloudinary.com/dipv76dpn/image/upload/v1761091782/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__2_mt4o3k.png" 
+          alt="Logo Nileynave" 
+          class="logo"
+        />
+      </a>
+    </div>
+
+    <div class="nav-title">
+      <h1>Nileynave</h1>
+      <div class="tagline">Conocimiento Libre</div>
+    </div>
+
+    <div class="menu-container">
+      <div class="menu" id="menu">
+        <a href="index.html">Inicio</a>
+        <a href="#biblioteca" class="active">Biblioteca</a>
+        <a href="#categorias">Categorías</a>
+      </div>
+
+      <!-- Botón Toggle Tema -->
+      <button class="tema-toggle" id="temaToggle" aria-label="Cambiar tema">
+        <span class="tema-icono">🌙</span>
+      </button>
+
+      <div class="hamburger" id="hamburger" aria-label="Menú de navegación">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <p class="tagline">Conocimiento Libre</p>
+    <p class="subtitle">Biblioteca digital con libros, cursos y recursos educativos en múltiples formatos</p>
+  </header>
+
+  <!-- Biblioteca -->
+  <section id="biblioteca" class="section">
+    <div class="container">
+      <div class="biblioteca-header">
+        <h2>Biblioteca Digital</h2>
+        <p>Explora nuestra colección curada de recursos educativos y literarios</p>
+      </div>
+
+      <!-- Estadísticas -->
+      <div class="estadisticas">
+        <div class="estadistica-card">
+          <span class="estadistica-numero">1,247</span>
+          <span class="estadistica-texto">Libros Disponibles</span>
+        </div>
+        <div class="estadistica-card">
+          <span class="estadistica-numero">56</span>
+          <span class="estadistica-texto">Categorías</span>
+        </div>
+        <div class="estadistica-card">
+          <span class="estadistica-numero">5</span>
+          <span class="estadistica-texto">Formatos</span>
+        </div>
+        <div class="estadistica-card">
+          <span class="estadistica-numero">100%</span>
+          <span class="estadistica-texto">Gratuito</span>
+        </div>
+      </div>
+
+      <!-- Filtros rápidos -->
+      <div class="filtros-rapidos">
+        <div class="filtro-rapido active" data-categoria="todas">Todos</div>
+        <div class="filtro-rapido" data-categoria="ficcion">Ficción</div>
+        <div class="filtro-rapido" data-categoria="ciencia">Ciencia</div>
+        <div class="filtro-rapido" data-categoria="tecnologia">Tecnología</div>
+        <div class="filtro-rapido" data-categoria="filosofia">Filosofía</div>
+        <div class="filtro-rapido" data-categoria="historia">Historia</div>
+      </div>
+
+      <!-- Libros por categoría -->
+      <div class="categoria-seccion">
+        <h3 class="categoria-titulo">📚 Literatura Universal</h3>
+        <div class="libros-grid">
+          
+          <!-- Libro 1 -->
+          <div class="libro-card" data-categoria="ficcion">
+            <div class="libro-portada">📖</div>
+            <div class="libro-contenido">
+              <div class="libro-header">
+                <h4 class="libro-titulo">Cien Años de Soledad</h4>
+                <div class="libro-autor">Gabriel García Márquez</div>
+              </div>
+              
+              <p class="libro-descripcion">
+                Obra maestra del realismo mágico que narra la historia de la familia Buendía en el pueblo ficticio de Macondo.
+              </p>
+              
+              <div class="libro-metadata">
+                <span class="libro-formato">PDF, EPUB</span>
+                <span>458 páginas</span>
+              </div>
+              
+              <div class="libro-acciones">
+                <a href="#" class="btn btn-sm btn-descarga">Descargar PDF</a>
+                <a href="#" class="btn btn-sm btn-preview">Vista previa</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Libro 2 -->
+          <div class="libro-card" data-categoria="ficcion">
+            <div class="libro-portada">🕵️</div>
+            <div class="libro-contenido">
+              <div class="libro-header">
+                <h4 class="libro-titulo">1984</h4>
+                <div class="libro-autor">George Orwell</div>
+              </div>
+              
+              <p class="libro-descripcion">
+                Novela distópica que explora temas de vigilancia masiva, manipulación de la información y control totalitario.
+              </p>
+              
+              <div class="libro-metadata">
+                <span class="libro-formato">EPUB, MOBI</span>
+                <span>328 páginas</span>
+              </div>
+              
+              <div class="libro-acciones">
+                <a href="#" class="btn btn-sm btn-descarga">Descargar EPUB</a>
+                <a href="#" class="btn btn-sm btn-preview">Vista previa</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Libro 3 -->
+          <div class="libro-card" data-categoria="ciencia">
+            <div class="libro-portada">🌌</div>
+            <div class="libro-contenido">
+              <div class="libro-header">
+                <h4 class="libro-titulo">Breve Historia del Tiempo</h4>
+                <div class="libro-autor">Stephen Hawking</div>
+              </div>
+              
+              <p class="libro-descripcion">
+                Explicación accesible de conceptos complejos de cosmología, agujeros negros y el origen del universo.
+              </p>
+              
+              <div class="libro-metadata">
+                <span class="libro-formato">PDF, CBR</span>
+                <span>256 páginas</span>
+              </div>
+              
+              <div class="libro-acciones">
+                <a href="#" class="btn btn-sm btn-descarga">Descargar PDF</a>
+                <a href="#" class="btn btn-sm btn-preview">Vista previa</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Segunda categoría -->
+      <div class="categoria-seccion">
+        <h3 class="categoria-titulo">🔬 Ciencia y Tecnología</h3>
+        <div class="libros-grid">
+          
+          <!-- Libro 4 -->
+          <div class="libro-card" data-categoria="tecnologia">
+            <div class="libro-portada">💻</div>
+            <div class="libro-contenido">
+              <div class="libro-header">
+                <h4 class="libro-titulo">El Programador Pragmático</h4>
+                <div class="libro-autor">Andrew Hunt & David Thomas</div>
+              </div>
+              
+              <p class="libro-descripcion">
+                Guía esencial para desarrolladores que cubre las mejores prácticas y técnicas de programación profesional.
+              </p>
+              
+              <div class="libro-metadata">
+                <span class="libro-formato">PDF, EPUB</span>
+                <span>352 páginas</span>
+              </div>
+              
+              <div class="libro-acciones">
+                <a href="#" class="btn btn-sm btn-descarga">Descargar PDF</a>
+                <a href="#" class="btn btn-sm btn-preview">Vista previa</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Libro 5 -->
+          <div class="libro-card" data-categoria="ciencia">
+            <div class="libro-portada">🧬</div>
+            <div class="libro-contenido">
+              <div class="libro-header">
+                <h4 class="libro-titulo">El Gen Egoísta</h4>
+                <div class="libro-autor">Richard Dawkins</div>
+              </div>
+              
+              <p class="libro-descripcion">
+                Revolucionaria teoría sobre la evolución que presenta a los genes como unidad fundamental de selección natural.
+              </p>
+              
+              <div class="libro-metadata">
+                <span class="libro-formato">EPUB, MOBI</span>
+                <span>544 páginas</span>
+              </div>
+              
+              <div class="libro-acciones">
+                <a href="#" class="btn btn-sm btn-descarga">Descargar EPUB</a>
+                <a href="#" class="btn btn-sm btn-preview">Vista previa</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Libro 6 -->
+          <div class="libro-card" data-categoria="filosofia">
+            <div class="libro-portada">🤔</div>
+            <div class="libro-contenido">
+              <div class="libro-header">
+                <h4 class="libro-titulo">El Mundo de Sofía</h4>
+                <div class="libro-autor">Jostein Gaarder</div>
+              </div>
+              
+              <p class="libro-descripcion">
+                Novela que introduce a la historia de la filosofía occidental a través de la historia de una joven estudiante.
+              </p>
+              
+              <div class="libro-metadata">
+                <span class="libro-formato">PDF, EPUB, MOBI</span>
+                <span>640 páginas</span>
+              </div>
+              
+              <div class="libro-acciones">
+                <a href="#" class="btn btn-sm btn-descarga">Descargar PDF</a>
+                <a href="#" class="btn btn-sm btn-preview">Vista previa</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Formatos disponibles -->
+  <section id="formatos" class="section" style="background: var(--gris-claro);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Formatos Disponibles</h2>
+        <p>Todos nuestros recursos están disponibles en múltiples formatos para tu comodidad</p>
+      </div>
+
+      <div class="grid grid-4">
+        <div class="card text-center">
+          <div style="font-size: 3rem; margin-bottom: var(--espacio-sm);">📄</div>
+          <h4>PDF</h4>
+          <p>Formato universal, ideal para imprimir y leer en cualquier dispositivo</p>
+        </div>
+
+        <div class="card text-center">
+          <div style="font-size: 3rem; margin-bottom: var(--espacio-sm);">📱</div>
+          <h4>EPUB</h4>
+          <p>Formato estándar para libros electrónicos, adaptable a cualquier pantalla</p>
+        </div>
+
+        <div class="card text-center">
+          <div style="font-size: 3rem; margin-bottom: var(--espacio-sm);">📚</div>
+          <h4>MOBI</h4>
+          <p>Compatible con dispositivos Kindle de Amazon</p>
+        </div>
+
+        <div class="card text-center">
+          <div style="font-size: 3rem; margin-bottom: var(--espacio-sm);">🎨</div>
+          <h4>CBR/CBZ</h4>
+          <p>Formatos especializados para cómics y novelas gráficas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Nileynave. Conocimiento Libre - Democratizando el acceso a la educación.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="main.js"></script>
+  
+  <!-- JavaScript específico para CL -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Filtros rápidos
+      const filtrosRapidos = document.querySelectorAll('.filtro-rapido');
+      const libros = document.querySelectorAll('.libro-card');
+
+      filtrosRapidos.forEach(filtro => {
+        filtro.addEventListener('click', function() {
+          // Remover activo de todos los filtros
+          filtrosRapidos.forEach(f => f.classList.remove('active'));
+          // Activar filtro clickeado
+          this.classList.add('active');
+          
+          const categoria = this.dataset.categoria;
+          
+          // Filtrar libros
+          libros.forEach(libro => {
+            if (categoria === 'todas' || libro.dataset.categoria === categoria) {
+              libro.style.display = 'block';
+            } else {
+              libro.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Simular contador de estadísticas
+      function animarContadores() {
+        const contadores = document.querySelectorAll('.estadistica-numero');
+        
+        contadores.forEach(contador => {
+          const target = parseInt(contador.textContent);
+          const incremento = target / 100;
+          let current = 0;
+          
+          const timer = setInterval(() => {
+            current += incremento;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+            }
+            contador.textContent = Math.floor(current);
+          }, 20);
+        });
+      }
+      
+      // Iniciar animación cuando la sección sea visible
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animarContadores();
+            observer.unobserve(entry.target);
+          }
+        });
+      });
+      
+      observer.observe(document.querySelector('.estadisticas'));
+    });
+
+    // Sistema de Modo Claro/Oscuro
+    document.addEventListener('DOMContentLoaded', function() {
+      const temaToggle = document.getElementById('temaToggle');
+      const temaIcono = temaToggle.querySelector('.tema-icono');
+      const body = document.body;
+
+      // Cargar tema guardado
+      const temaGuardado = localStorage.getItem('tema') || 'claro';
+      body.setAttribute('data-tema', temaGuardado);
+      actualizarIconoTema(temaGuardado);
+
+      // Alternar tema
+      temaToggle.addEventListener('click', function() {
+        const temaActual = body.getAttribute('data-tema');
+        const nuevoTema = temaActual === 'claro' ? 'oscuro' : 'claro';
+        
+        body.setAttribute('data-tema', nuevoTema);
+        localStorage.setItem('tema', nuevoTema);
+        actualizarIconoTema(nuevoTema);
+        
+        // Efecto de transición
+        temaToggle.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          temaToggle.style.transform = 'scale(1)';
+        }, 150);
+      });
+
+      function actualizarIconoTema(tema) {
+        temaIcono.textContent = tema === 'claro' ? '🌙' : '☀️';
+      }
+
+      // Detectar preferencia del sistema
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function detectarTemaSistema(e) {
+        // Solo aplicar si no hay tema guardado manualmente
+        if (!localStorage.getItem('tema')) {
+          const temaSistema = e.matches ? 'oscuro' : 'claro';
+          body.setAttribute('data-tema', temaSistema);
+          actualizarIconoTema(temaSistema);
+        }
+      }
+
+      // Escuchar cambios en la preferencia del sistema
+      mediaQuery.addEventListener('change', detectarTemaSistema);
+      
+      // Aplicar tema del sistema al cargar (si no hay preferencia guardada)
+      if (!localStorage.getItem('tema')) {
+        detectarTemaSistema(mediaQuery);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Nileynave: tu barco de libertad en el mar digital. Directorio curado de enlaces útiles, sin anuncios, sin trampas." />
+  <title>Nileynave</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dipv76dpn/image/upload/v1761056303/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__1_poda8e.png" />
+
+  <!-- CSS General -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- CSS para Modo Oscuro -->
+  <style>
+    /* ===== VARIABLES PARA MODO OSCURO ===== */
+    :root {
+      /* Colores modo claro (default) */
+      --azul-profundo: #1a2b4d;
+      --azul-medio: #2c5282;
+      --azul-claro: #3182ce;
+      --arena: #fdf6e3;
+      --blanco: #ffffff;
+      --gris-claro: #f8f9fa;
+      --gris-medio: #e2e8f0;
+      --gris-oscuro: #4a5568;
+      --dorado: #f6b93b;
+      --verde: #38a169;
+      --rojo: #e53e3e;
+      
+      /* Fondos modo claro */
+      --fondo-primario: linear-gradient(135deg, #f0f4ff 0%, #e6eeff 100%);
+      --fondo-secundario: #ffffff;
+      --fondo-terciario: #f8f9fa;
+      
+      /* Textos modo claro */
+      --texto-primario: #1a2b4d;
+      --texto-secundario: #4a5568;
+      --texto-terciario: #718096;
+      
+      /* Sombras modo claro */
+      --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --sombra-fuerte: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ===== MODO OSCURO ===== */
+    [data-tema="oscuro"] {
+      /* Colores modo oscuro */
+      --azul-profundo: #ebf8ff;
+      --azul-medio: #90cdf4;
+      --azul-claro: #63b3ed;
+      --arena: #2d3748;
+      --blanco: #1a202c;
+      --gris-claro: #2d3748;
+      --gris-medio: #4a5568;
+      --gris-oscuro: #a0aec0;
+      --dorado: #f6ad55;
+      --verde: #68d391;
+      --rojo: #fc8181;
+      
+      /* Fondos modo oscuro */
+      --fondo-primario: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      --fondo-secundario: #2d3748;
+      --fondo-terciario: #4a5568;
+      
+      /* Textos modo oscuro */
+      --texto-primario: #f7fafc;
+      --texto-secundario: #e2e8f0;
+      --texto-terciario: #cbd5e0;
+      
+      /* Sombras modo oscuro */
+      --sombra-suave: 0 2px 4px rgba(0, 0, 0, 0.3);
+      --sombra-media: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --sombra-fuerte: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* ===== APLICAR VARIABLES A ELEMENTOS ===== */
+    body {
+      background: var(--fondo-primario);
+      color: var(--texto-primario);
+    }
+
+    .navbar {
+      background: var(--fondo-secundario);
+      box-shadow: var(--sombra-media);
+    }
+
+    .navbar-scrolled {
+      background: rgba(var(--fondo-secundario-rgb), 0.98);
+    }
+
+    .card {
+      background: var(--fondo-secundario);
+      box-shadow: var(--sombra-media);
+    }
+
+    .card:hover {
+      box-shadow: var(--sombra-fuerte);
+    }
+
+    /* ===== CORRECCIÓN DEL FOOTER ===== */
+    .footer {
+      background: var(--azul-profundo);
+      color: var(--texto-secundario);
+    }
+
+    /* En modo oscuro, el footer necesita colores específicos */
+    [data-tema="oscuro"] .footer {
+      background: #1a365d; /* Azul más oscuro para el footer en modo oscuro */
+      color: #cbd5e0; /* Texto claro para buen contraste */
+      border-top: 1px solid #2d3748;
+    }
+
+    /* ===== BOTÓN TOGGLE TEMA ===== */
+    .tema-toggle {
+      background: none;
+      border: 2px solid var(--azul-medio);
+      color: var(--azul-medio);
+      padding: 0.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin-left: var(--espacio-sm);
+    }
+
+    .tema-toggle:hover {
+      background: var(--azul-medio);
+      color: var(--blanco);
+      transform: rotate(15deg);
+    }
+
+    .tema-icono {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    [data-tema="oscuro"] .tema-icono {
+      transform: rotate(180deg);
+    }
+
+    /* ===== MEJORAS VISUALES MODO OSCURO ===== */
+    [data-tema="oscuro"] .logo {
+      filter: brightness(0.9);
+    }
+
+    [data-tema="oscuro"] .menu a {
+      color: var(--texto-secundario);
+    }
+
+    [data-tema="oscuro"] .menu a:hover,
+    [data-tema="oscuro"] .menu a.active {
+      color: var(--blanco);
+      background: var(--azul-medio);
+    }
+
+    [data-tema="oscuro"] .hero .tagline {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .hero .subtitle {
+      color: var(--texto-secundario);
+    }
+
+    [data-tema="oscuro"] .categoria-features h4 {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .categoria-features li {
+      color: var(--texto-secundario);
+    }
+
+    /* ===== MEJORAS ADICIONALES PARA MODO OSCURO ===== */
+    [data-tema="oscuro"] .btn {
+      background: var(--azul-medio);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .btn:hover {
+      background: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .btn-outline {
+      background: transparent;
+      border: 2px solid var(--azul-medio);
+      color: var(--azul-medio);
+    }
+
+    [data-tema="oscuro"] .btn-outline:hover {
+      background: var(--azul-medio);
+      color: var(--blanco);
+    }
+
+    [data-tema="oscuro"] .text-link {
+      color: var(--azul-claro);
+    }
+
+    [data-tema="oscuro"] .text-link:hover {
+      color: var(--azul-medio);
+    }
+
+    /* ===== TRANSICIONES SUAVES ===== */
+    body,
+    .navbar,
+    .card,
+    .btn,
+    .menu a,
+    .footer {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+  </style>
+</head>
+<body data-tema="claro">
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo-container">
+      <a href="index.html" class="logo-link" aria-label="Ir al inicio de Nileynave">
+        <img 
+          src="https://res.cloudinary.com/dipv76dpn/image/upload/v1761091782/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__2_mt4o3k.png" 
+          alt="Logo Nileynave" 
+          class="logo"
+        />
+      </a>
+    </div>
+
+    <div class="nav-title">
+      <h1>Nileynave</h1>
+      <div class="tagline">Barco de libertad digital</div>
+    </div>
+
+    <div class="menu-container">
+      <div class="menu" id="menu">
+        <a href="index.html" class="active">Inicio</a>
+        <a href="#categorias">Categorías</a>
+        <a href="#conocenos">Conócenos</a>
+      </div>
+
+      <!-- Botón Toggle Tema -->
+      <button class="tema-toggle" id="temaToggle" aria-label="Cambiar tema">
+        <span class="tema-icono">🌙</span>
+      </button>
+
+      <div class="hamburger" id="hamburger" aria-label="Menú de navegación">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <p class="tagline">Tu barco de libertad en el mar digital</p>
+    <p class="subtitle">Sin anuncios. Sin trampas. Solo enlaces que valen la pena.</p>
+  </header>
+
+  <!-- Categorías -->
+  <section id="categorias" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Islas de conocimiento</h2>
+      </div>
+      
+      <div class="categorias-grid grid grid-3">
+        
+        <!-- Categoría 1: Navegación esencial -->
+        <div class="categoria-card card">
+          <div class="categoria-icon">🔍</div>
+          <h3>Navegación esencial</h3>
+          <p>Herramientas para navegar con privacidad, seguridad y libertad en el océano digital.</p>
+          
+          <div class="categoria-features">
+            <h4>Contenido incluido:</h4>
+            <ul>
+              <li>Navegadores privados y seguros</li>
+              <li>Buscadores alternativos</li>
+              <li>VPNs y herramientas de anonimato</li>
+              <li>Extensiones de privacidad</li>
+              <li>Bloqueadores de anuncios</li>
+              <li>Herramientas anti-rastreo</li>
+            </ul>
+          </div>
+          
+          <a href="NE.html" class="btn">Explorar navegación</a>
+        </div>
+
+        <!-- Categoría 2: Conocimiento libre -->
+        <div class="categoria-card card">
+          <div class="categoria-icon">📚</div>
+          <h3>Conocimiento libre</h3>
+          <p>Biblioteca digital con libros, cursos y recursos educativos en múltiples formatos.</p>
+          
+          <div class="categoria-features">
+            <h4>Formatos disponibles:</h4>
+            <ul>
+              <li>PDF - Documentos estándar</li>
+              <li>EPUB - Libros electrónicos</li>
+              <li>CBR/CBZ - Cómics digitales</li>
+              <li>MOBI - Kindle</li>
+              <li>Audiobooks</li>
+              <li>Recursos académicos</li>
+            </ul>
+          </div>
+
+          <div class="categoria-features">
+            <h4>Características:</h4>
+            <ul>
+              <li>Carátulas y descripciones</li>
+              <li>Enlaces de compra y descarga</li>
+              <li>Búsqueda por categorías</li>
+              <li>Recomendaciones</li>
+            </ul>
+          </div>
+          
+          <a href="CL.html" class="btn">Explorar biblioteca</a>
+        </div>
+
+        <!-- Categoría 3: Creatividad sin fronteras -->
+        <div class="categoria-card card">
+          <div class="categoria-icon">🎨</div>
+          <h3>Creatividad sin fronteras</h3>
+          <p>Recursos gratuitos y herramientas para diseñadores, artistas y creadores digitales.</p>
+          
+          <div class="categoria-features">
+            <h4>Recursos disponibles:</h4>
+            <ul>
+              <li>Software de diseño gratuito</li>
+              <li>Bancos de imágenes libres</li>
+              <li>Fuentes y tipografías</li>
+              <li>Iconos y vectores</li>
+              <li>Texturas y patrones</li>
+              <li>Plantillas editables</li>
+            </ul>
+          </div>
+
+          <div class="categoria-features">
+            <h4>Herramientas:</h4>
+            <ul>
+              <li>Editores online</li>
+              <li>Generadores de paletas</li>
+              <li>Conversores de formato</li>
+              <li>Tutoriales y guías</li>
+            </ul>
+          </div>
+          
+          <a href="CSF.html" class="btn">Explorar creatividad</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Conócenos -->
+  <section id="conocenos" class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Conócenos</h2>
+      </div>
+      
+      <div class="conocenos-content">
+        <div class="conocenos-texto">
+          <p>
+            Nileynave nace de la frustración ante un internet saturado de anuncios, enlaces falsos y distracciones innecesarias.
+          </p>
+          <p>
+            Somos un <strong>directorio curado manualmente</strong>, donde cada enlace ha sido revisado por su utilidad, honestidad y calidad.
+          </p>
+          <p>
+            No vendemos tu atención. No rastreamos tu comportamiento. Solo te ofrecemos <strong>puertos seguros en el océano digital</strong>.
+          </p>
+          <p>
+            ¿Tienes un recurso que merece estar aquí? <a href="#" class="text-link">Sugiere un enlace</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 Nileynave. Un barco sin ley, para navegantes libres.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="main.js"></script>
+  
+  <!-- JavaScript para Modo Oscuro -->
+  <script>
+    // Sistema de Modo Claro/Oscuro
+    document.addEventListener('DOMContentLoaded', function() {
+      const temaToggle = document.getElementById('temaToggle');
+      const temaIcono = temaToggle.querySelector('.tema-icono');
+      const body = document.body;
+
+      // Cargar tema guardado
+      const temaGuardado = localStorage.getItem('tema') || 'claro';
+      body.setAttribute('data-tema', temaGuardado);
+      actualizarIconoTema(temaGuardado);
+
+      // Alternar tema
+      temaToggle.addEventListener('click', function() {
+        const temaActual = body.getAttribute('data-tema');
+        const nuevoTema = temaActual === 'claro' ? 'oscuro' : 'claro';
+        
+        body.setAttribute('data-tema', nuevoTema);
+        localStorage.setItem('tema', nuevoTema);
+        actualizarIconoTema(nuevoTema);
+        
+        // Efecto de transición
+        temaToggle.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          temaToggle.style.transform = 'scale(1)';
+        }, 150);
+      });
+
+      function actualizarIconoTema(tema) {
+        temaIcono.textContent = tema === 'claro' ? '🌙' : '☀️';
+      }
+
+      // Detectar preferencia del sistema
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      function detectarTemaSistema(e) {
+        // Solo aplicar si no hay tema guardado manualmente
+        if (!localStorage.getItem('tema')) {
+          const temaSistema = e.matches ? 'oscuro' : 'claro';
+          body.setAttribute('data-tema', temaSistema);
+          actualizarIconoTema(temaSistema);
+        }
+      }
+
+      // Escuchar cambios en la preferencia del sistema
+      mediaQuery.addEventListener('change', detectarTemaSistema);
+      
+      // Aplicar tema del sistema al cargar (si no hay preferencia guardada)
+      if (!localStorage.getItem('tema')) {
+        detectarTemaSistema(mediaQuery);
+      }
+    });
+  </script>
+</body>
+</html>
