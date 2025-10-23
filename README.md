@@ -2,7 +2,7 @@
 
 ![Nileynave Logo](https://res.cloudinary.com/dipv76dpn/image/upload/v1761091782/gemini-2.5-flash-image-preview_nano-banana__Quiero_mejorar_este__2_mt4o3k.png)
 
-## [🌐 **Visita la Web - Nileynave**]([https://jhormancastista.github.io/-Nileynave-/index.html](https://jhormancastella.github.io/-Nileynave-/))
+## [🌐 **Visita la Web - Nileynave**](https://jhormancastella.github.io/-Nileynave-/)
 
 ## 📋 Índice
 - [🎯 Descripción del Proyecto](#-descripción-del-proyecto)
